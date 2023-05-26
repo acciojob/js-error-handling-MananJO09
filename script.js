@@ -28,5 +28,9 @@ function evalString(expression) {
 	const endsWithInvalidOperator= +,/,*,-;
 	if(endsWithInvalidOperator.test(expression)){
 		throw new SyntaxError('Expression should not end with invalid operator');
+	}	
 	}
+	catch (error) {
+    console.error(error);
+  }
 }
