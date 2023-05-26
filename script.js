@@ -1,12 +1,12 @@
 class OutOfRangeError extends Error {
   constructor(arg) {
-    super('Expression should only consist of integers and +-/* characters and not < arg >');
+    super(`Expression should only consist of integers and +-/* characters and not ${arg}`);
     this.name = 'OutOfRangeError';
   }
 }
 
 class InvalidExprError extends Error {
-  constructor(arg) {
+  constructor() {
     super('Expression should not have an invalid combination of expression');
     this.name = 'InvalidExprError';
   }
@@ -14,6 +14,13 @@ class InvalidExprError extends Error {
 
 function evalString(expression) {
   try {
+    // Check for invalid characters using regular expressions
+    const invalidCharacterPattern = /[^0-9+\-*/\s]/;
+    const invalidCharacterMatch = expression.match(invalidCharacterPattern);
+    if (invalidCharacterMatch) {
+      throw new OutOfRangeError(invalidCharacterMatch[0]);
+    }
+
     // Check for invalid operator combinations using regular expressions
     const invalidOperatorPattern = /(\+\+|--|\+\-|\-\+|\*\/|\/\*|\+\/|\/\+|\*\*|\/\/)/;
     if (invalidOperatorPattern.test(expression)) {
